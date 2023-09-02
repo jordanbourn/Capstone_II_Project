@@ -1,0 +1,245 @@
+---
+title: "capstone_2"
+output: html_document
+date: "2023-08-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Capstone II Project Worksheet
+
+The Data:
+
+```{r}
+data_nat <- read.csv("C:/Users/jorda/Desktop/Coding_Temple_Work/capstone_2/data/NationalNames.csv")
+# View(data_nat)
+```
+
+### The Hypothesis:
+
+#### Popularity of a particular name doesn't last longer than about a decade.
+
+Create "Decade" column, categorize values by Decade.
+
+```{r}
+data_nat$Decade <- 
+
+data_nat[data_nat$Year >= 1900 & data_nat$Year <= 1909, "Decade"] <- 1900
+data_nat[data_nat$Year >= 1910 & data_nat$Year <= 1919, "Decade"] <- 1910
+data_nat[data_nat$Year >= 1920 & data_nat$Year <= 1929, "Decade"] <- 1920
+data_nat[data_nat$Year >= 1930 & data_nat$Year <= 1939, "Decade"] <- 1930
+data_nat[data_nat$Year >= 1940 & data_nat$Year <= 1949, "Decade"] <- 1940
+data_nat[data_nat$Year >= 1950 & data_nat$Year <= 1959, "Decade"] <- 1950
+data_nat[data_nat$Year >= 1960 & data_nat$Year <= 1969, "Decade"] <- 1960
+data_nat[data_nat$Year >= 1970 & data_nat$Year <= 1979, "Decade"] <- 1970
+data_nat[data_nat$Year >= 1980 & data_nat$Year <= 1989, "Decade"] <- 1980
+data_nat[data_nat$Year >= 1990 & data_nat$Year <= 1999, "Decade"] <- 1990
+data_nat[data_nat$Year >= 2000, "Decade"] <- "2000s"
+data_nat[data_nat$Year < 1900, "Decade"] <- "pre-1900"
+
+# View(data_nat %>% select("Name","Year","Decade"))
+```
+
+Female data first:
+
+```{r}
+data_nat_grouped <- group_by(data_nat, Decade, Count)
+F_data_nat <- filter(data_nat_grouped, Gender == 'F', Decade != "pre-1900" & Decade != "2000s")
+# View(F_data_nat)
+```
+
+Now the top 5 Female names of each decade:
+
+```{r}
+F_data_sorted <- F_data_nat %>% arrange(desc(Count))
+# View(F_data_sorted)
+
+F_nat_1900 <- filter(F_data_sorted, Decade == 1900)
+# View(head(F_nat_1900))
+F_1900 <- F_nat_1900[!duplicated(F_nat_1900$Name), ]
+# View(head(F_1900))
+
+F_nat_1910 <- filter(F_data_sorted, Decade == 1910)
+F_1910 <- F_nat_1910[!duplicated(F_nat_1910$Name), ]
+
+F_nat_1920 <- filter(F_data_sorted, Decade == 1920)
+F_1920 <- F_nat_1920[!duplicated(F_nat_1920$Name), ]
+
+F_nat_1930 <- filter(F_data_sorted, Decade == 1930)
+F_1930 <- F_nat_1930[!duplicated(F_nat_1930$Name), ]
+
+F_nat_1940 <- filter(F_data_sorted, Decade == 1940)
+F_1940 <- F_nat_1940[!duplicated(F_nat_1940$Name), ]
+
+F_nat_1950 <- filter(F_data_sorted, Decade == 1950)
+F_1950 <- F_nat_1950[!duplicated(F_nat_1950$Name), ]
+
+F_nat_1960 <- filter(F_data_sorted, Decade == 1960)
+F_1960 <- F_nat_1960[!duplicated(F_nat_1960$Name), ]
+
+F_nat_1970 <- filter(F_data_sorted, Decade == 1970)
+F_1970 <- F_nat_1970[!duplicated(F_nat_1970$Name), ]
+
+F_nat_1980 <- filter(F_data_sorted, Decade == 1980)
+F_1980 <- F_nat_1980[!duplicated(F_nat_1980$Name), ]
+
+F_nat_1990 <- filter(F_data_sorted, Decade == 1990)
+F_1990 <- F_nat_1990[!duplicated(F_nat_1990$Name), ]
+
+```
+
+Now male name data...
+
+```{r}
+M_data_nat <- filter(data_nat_grouped, Gender == 'M', Decade != "pre-1900" & Decade != "2000s")
+# View(M_data_nat)
+```
+
+Top 5 Male names of each decade:
+
+```{r}
+M_data_sorted <- M_data_nat %>% arrange(desc(Count))
+# View(M_data_sorted)
+
+M_nat_1900 <- filter(M_data_sorted, Decade == 1900)
+# View(head(M_nat_1900))
+M_1900 <- M_nat_1900[!duplicated(M_nat_1900$Name), ]
+# View(head(M_1900))
+
+M_nat_1910 <- filter(M_data_sorted, Decade == 1910)
+M_1910 <- M_nat_1910[!duplicated(M_nat_1910$Name), ]
+
+M_nat_1920 <- filter(M_data_sorted, Decade == 1920)
+M_1920 <- M_nat_1920[!duplicated(M_nat_1920$Name), ]
+
+M_nat_1930 <- filter(M_data_sorted, Decade == 1930)
+M_1930 <- M_nat_1930[!duplicated(M_nat_1930$Name), ]
+
+M_nat_1940 <- filter(M_data_sorted, Decade == 1940)
+M_1940 <- M_nat_1940[!duplicated(M_nat_1940$Name), ]
+
+M_nat_1950 <- filter(M_data_sorted, Decade == 1950)
+M_1950 <- M_nat_1950[!duplicated(M_nat_1950$Name), ]
+
+M_nat_1960 <- filter(M_data_sorted, Decade == 1960)
+M_1960 <- M_nat_1960[!duplicated(M_nat_1960$Name), ]
+
+M_nat_1970 <- filter(M_data_sorted, Decade == 1970)
+M_1970 <- M_nat_1970[!duplicated(M_nat_1970$Name), ]
+
+M_nat_1980 <- filter(M_data_sorted, Decade == 1980)
+M_1980 <- M_nat_1980[!duplicated(M_nat_1980$Name), ]
+
+M_nat_1990 <- filter(M_data_sorted, Decade == 1990)
+M_1990 <- M_nat_1990[!duplicated(M_nat_1990$Name), ]
+
+```
+
+Female name graphing
+
+```{r}
+ggplot(data = head(F_data_sorted,n = 175)) +
+  geom_area(mapping = aes(x = Year,y = Count,linetype = Name,fill = Name))
+
+# okay, but not great yet
+#ggplot(data = head(F_data_nat,n = 20), mapping = aes(x = Year,y = Count, group = Decade)) +
+#  geom_point(mapping = aes(color = Name)) +
+#  geom_smooth(se = FALSE)
+
+# nah, not visually clear
+# ggplot(data = head(F_nat_1900,n = 20)) +
+#   geom_smooth(mapping = aes(x = Year,y = Count, linetype = Name)) +
+#   geom_point(mapping = aes(x = Year,y = Count, color = Name))
+
+# just no.
+# ggplot(data = head(F_1900,n = 20)) + geom_smooth(mapping = aes(x = Year,y = Count, color = Name))
+```
+
+Male name graphing
+
+```{r}
+ggplot(data = head(M_data_sorted,n = 175)) +
+  geom_area(mapping = aes(x = Year,y = Count,linetype = Name,fill = Name))
+
+# okay, but still not as clear as I'd like
+#ggplot(data = head(M_data_nat,n = 20), mapping = aes(x = Year,y = Count, group = Decade)) +
+#  geom_point(mapping = aes(color = Name)) +
+#  geom_smooth(se = FALSE)
+
+# not clear enough
+#ggplot(data = head(M_nat_1900,n = 40)) +
+# geom_smooth(mapping = aes(x = Year,y = Count, linetype = Name)) +
+# geom_point(mapping = aes(x = Year,y = Count, color = Name))
+```
+
+## On to State Data
+
+I'm curious about my home state: Colorado.
+
+```{r}
+data_state <- read.csv("C:/Users/jorda/Desktop/Coding_Temple_Work/capstone_2/data/StateNames.csv")
+# View(data_state)
+```
+
+### Hypothesis:
+
+#### Name trends come and go faster measured in one state than on a national scale. ie: name popularity comes and goes faster in the Colorado data than the national data.
+
+```{r}
+# let's get Colorado's data first
+CO_data <- filter(data_state, State == 'CO')
+# View(CO_data)
+```
+
+```{r}
+# Now let's make decade groups
+CO_data[CO_data$Year >= 1900 & CO_data$Year <= 1909, "Decade"] <- 1900
+CO_data[CO_data$Year >= 1910 & CO_data$Year <= 1919, "Decade"] <- 1910
+CO_data[CO_data$Year >= 1920 & CO_data$Year <= 1929, "Decade"] <- 1920
+CO_data[CO_data$Year >= 1930 & CO_data$Year <= 1939, "Decade"] <- 1930
+CO_data[CO_data$Year >= 1940 & CO_data$Year <= 1949, "Decade"] <- 1940
+CO_data[CO_data$Year >= 1950 & CO_data$Year <= 1959, "Decade"] <- 1950
+CO_data[CO_data$Year >= 1960 & CO_data$Year <= 1969, "Decade"] <- 1960
+CO_data[CO_data$Year >= 1970 & CO_data$Year <= 1979, "Decade"] <- 1970
+CO_data[CO_data$Year >= 1980 & CO_data$Year <= 1989, "Decade"] <- 1980
+CO_data[CO_data$Year >= 1990 & CO_data$Year <= 1999, "Decade"] <- 1990
+CO_data[CO_data$Year >= 2000, "Decade"] <- "2000s"
+CO_data[CO_data$Year < 1900, "Decade"] <- "pre-1900"
+
+# View(CO_data %>% select("Name","Year","Decade"))
+```
+
+```{r}
+# Now for female names in CO
+CO_data_grouped <- group_by(CO_data, Decade, Count)
+F_CO_data <- filter(CO_data_grouped, Gender == 'F', Decade != "pre-1900" & Decade != "2000s")
+# View(F_CO_data)
+
+F_CO_sorted <- F_CO_data %>% arrange(desc(Count))
+# View(F_CO_sorted)
+```
+
+```{r}
+# Graphing female names in CO data
+ggplot(data = head(F_CO_sorted,n = 150)) +
+  geom_area(mapping = aes(x = Year,y = Count,linetype = Name,fill = Name))
+```
+
+Now for male names in CO
+
+```{r}
+CO_data_grouped <- group_by(CO_data, Decade, Count)
+M_CO_data <- filter(CO_data_grouped, Gender == 'M', Decade != "pre-1900" & Decade != "2000s")
+# View(M_CO_data)
+
+M_CO_sorted <- M_CO_data %>% arrange(desc(Count))
+# View(M_CO_sorted)
+```
+
+```{r}
+# Graphing male names in CO data
+ggplot(data = head(M_CO_sorted,n = 150)) +
+  geom_area(mapping = aes(x = Year,y = Count,linetype = Name,fill = Name))
+```
